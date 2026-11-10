@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>German Flashcards: Basic Phrases</title>
+<style>
+:root{
+  --bg:#eef2f9;--panel:#fff;--ink:#16203a;--muted:#6b7488;--line:#d9e0ec;--front:#fff;--gold:#e07b1a;
+  --nv1:#2b3a68;--nv2:#141f42;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0b111d;--panel:#121b2e;--ink:#e8edf7;--muted:#97a3b9;--line:#24304a;--front:#18233b;--nv1:#34457a;--nv2:#18264f}
+}
+:root[data-theme="dark"]{--bg:#0b111d;--panel:#121b2e;--ink:#e8edf7;--muted:#97a3b9;--line:#24304a;--front:#18233b;--nv1:#34457a;--nv2:#18264f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--bg) 88%,#2f6fb8));min-height:100vh;color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif}
+.app{max-width:760px;margin:0 auto;padding:22px 16px 44px}
+/* glossy tile: shared by header, tabs, buttons */
+.gloss{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 82%,#fff) 0%,var(--a) 48%,var(--a2) 100%);box-shadow:0 5px 12px color-mix(in srgb,var(--a) 38%,transparent),inset 0 1px 0 #ffffff55}
+header{--a:var(--nv1);--a2:var(--nv2);border-radius:16px;padding:22px 26px 18px;color:#fff;position:relative;margin-bottom:18px}
+header{background:linear-gradient(180deg,color-mix(in srgb,var(--nv1) 82%,#fff) 0%,var(--nv1) 45%,var(--nv2) 100%);box-shadow:0 8px 18px rgba(20,31,66,.35),inset 0 1px 0 #ffffff44}
+h1{margin:0;font-size:clamp(1.4rem,4.6vw,1.9rem);font-weight:800;letter-spacing:.01em}
+header p{margin:4px 0 0;color:#c5d0ea;font-size:.92rem}
+.tog{position:absolute;top:14px;right:14px;background:#ffffff1a;color:#fff;border:1px solid #ffffff44;border-radius:8px;padding:4px 10px;font:inherit;font-size:.78rem;cursor:pointer}
+.panel{background:transparent;padding:0}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.tabs button{font:inherit;font-weight:800;font-size:.88rem;padding:11px 6px;border-radius:12px;border:0;color:#fff;cursor:pointer;opacity:.55;position:relative;transition:opacity .15s,transform .15s}
+.tabs button[data-k="0"]{--a:var(--nv1);--a2:var(--nv2)}
+.tabs button[data-k="1"]{--a:#2f6fb8;--a2:#1e4f8c}
+.tabs button[data-k="2"]{--a:#c9406f;--a2:#a02a55}
+.tabs button[data-k="3"]{--a:#2e8b57;--a2:#1f6b41}
+.tabs button{background:linear-gradient(180deg,color-mix(in srgb,var(--a) 82%,#fff) 0%,var(--a) 48%,var(--a2) 100%);box-shadow:0 5px 12px color-mix(in srgb,var(--a) 38%,transparent),inset 0 1px 0 #ffffff55}
+.tabs button[aria-pressed="true"],.tabs button:hover{opacity:1}
+.tabs button[aria-pressed="true"]::after{content:"";position:absolute;left:22%;right:22%;bottom:-8px;height:3px;border-radius:2px;background:var(--gold)}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;font-weight:700;color:var(--muted);margin:6px 4px 8px}
+.bar{height:6px;background:color-mix(in srgb,var(--muted) 22%,transparent);border-radius:3px;margin-bottom:18px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#2f6fb8,#c9406f,#2e8b57,#e07b1a);transition:width .25s}
+.scene{perspective:1200px;height:290px}
+.card{--a:#2f6fb8;--a2:#1e4f8c;position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.1,.2,1);cursor:pointer;border:0;padding:0;background:none;font:inherit;text-align:center}
+.card[data-set="1"]{--a:#2f6fb8;--a2:#1e4f8c}
+.card[data-set="2"]{--a:#c9406f;--a2:#a02a55}
+.card[data-set="3"]{--a:#2e8b57;--a2:#1f6b41}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:26px 30px 30px}
+.front{background:linear-gradient(180deg,var(--front) 0%,color-mix(in srgb,var(--a) 13%,var(--front)) 100%);border:1px solid color-mix(in srgb,var(--a) 18%,var(--line));box-shadow:0 10px 24px color-mix(in srgb,var(--a) 24%,transparent),inset 0 1px 0 #ffffff88}
+.front::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;border-radius:18px 0 0 18px;background:linear-gradient(180deg,color-mix(in srgb,var(--a) 82%,#fff),var(--a2))}
+.back{transform:rotateY(180deg);color:#fff;background:linear-gradient(180deg,color-mix(in srgb,var(--a) 80%,#fff) 0%,var(--a) 45%,var(--a2) 100%);box-shadow:0 12px 28px color-mix(in srgb,var(--a) 45%,transparent),inset 0 1px 0 #ffffff66}
+.back::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;border-radius:18px 0 0 18px;background:var(--gold)}
+.lang{position:absolute;top:16px;left:24px;font-size:.74rem;font-weight:800;padding:3px 12px;border-radius:999px;background:color-mix(in srgb,var(--a) 14%,transparent);color:var(--a)}
+.back .lang{background:#ffffff2e;color:#fff}
+.de{font-size:clamp(1.6rem,6vw,2.4rem);font-weight:800;color:var(--a);line-height:1.2;overflow-wrap:anywhere}
+.pr{margin-top:12px;font-size:.95rem;font-weight:700;color:color-mix(in srgb,var(--a) 65%,var(--muted))}
+.en{font-size:clamp(1.3rem,5vw,1.9rem);font-weight:800;line-height:1.3;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.hint{position:absolute;bottom:12px;font-size:.74rem;color:var(--muted)}
+.back .hint{color:#ffffffcc}
+.ctrl{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.ctrl button{font:inherit;font-weight:800;font-size:.92rem;padding:11px 22px;border-radius:12px;border:0;color:#fff;cursor:pointer;--a:var(--nv1);--a2:var(--nv2);background:linear-gradient(180deg,color-mix(in srgb,var(--a) 82%,#fff) 0%,var(--a) 48%,var(--a2) 100%);box-shadow:0 5px 12px color-mix(in srgb,var(--a) 38%,transparent),inset 0 1px 0 #ffffff55;transition:transform .15s}
+.ctrl button:hover{transform:translateY(-2px)}
+.ctrl button.pri{--a:#e8892a;--a2:#c2620d}
+.ctrl button#shuf,.ctrl button#say{--a:#2f6fb8;--a2:#1e4f8c}
+.ctrl button[aria-pressed="true"]{outline:3px solid var(--gold);outline-offset:2px}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.keys{text-align:center;margin-top:16px;color:var(--muted);font-size:.78rem}
+@media (prefers-reduced-motion:reduce){.card,.tabs button,.ctrl button{transition:none}}
+@media (max-width:480px){.scene{height:310px}.tabs{gap:6px}.tabs button{font-size:.78rem;padding:10px 2px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <button class="tog" id="tog" type="button">Light / Dark</button>
+    <h1>German Flashcards</h1>
+    <p>Basic phrases. Tap a card to see the English.</p>
+  </header>
+  <div class="panel">
+    <div class="tabs" id="tabs"></div>
+    <div class="meta"><span id="cnt"></span><span id="set"></span></div>
+    <div class="bar"><i id="prog"></i></div>
+    <div class="scene">
+      <button class="card" id="card" type="button" aria-label="Flashcard. Press to flip.">
+        <div class="face front"><span class="lang">Deutsch</span><div class="de" id="de"></div><div class="pr" id="pr"></div><span class="hint">Tap to flip</span></div>
+        <div class="face back"><span class="lang">English</span><div class="en" id="en"></div><span class="hint">Tap to flip back</span></div>
+      </button>
+    </div>
+    <div class="ctrl">
+      <button id="prev" type="button">Previous</button>
+      <button id="flip" class="pri" type="button">Flip</button>
+      <button id="next" type="button">Next</button>
+    </div>
+    <div class="ctrl">
+      <button id="shuf" type="button" aria-pressed="false">Shuffle</button>
+      <button id="say" type="button">Listen</button>
+    </div>
+    <div class="keys">Keyboard: Space to flip, Left and Right arrows to move</div>
+  </div>
+</div>
+<script>
+const S1="Set 1: Greetings and introductions",S2="Set 2: Getting to know you",S3="Set 3: Everyday expressions";
+const D=[
+[1,"Guten Morgen","goot-en mor-gen","Good morning"],
+[1,"Guten Tag","goot-en tahk","Hello / Good day"],
+[1,"Guten Abend","goot-en ah-bent","Good evening"],
+[1,"Gute Nacht","goot-eh nahkt","Good night"],
+[1,"Tag / Hallo / Servus","tahk / hah-loh / sair-voohs","Hi / Hello / Hi and bye (Southern Germany and Austria)"],
+[1,"Auf Wiedersehen","owf vee-dair-zayn","Goodbye"],
+[1,"Grüß dich / Grüß Gott!","","Hello! / Greetings! (Southern Germany and Austria)"],
+[1,"Tschüss / Tschau","tchews / chow","Bye!"],
+[1,"Gehen wir!","geh-en veer","Let’s go!"],
+[1,"Bis später","biss shpay-ter","See you later"],
+[1,"Bis bald","biss bahlt","See you soon"],
+[1,"Bis morgen","biss mohr-gen","See you tomorrow"],
+[1,"Bitte","bih-tuh","Please"],
+[1,"Danke (schön / sehr)","dahn-kuh shurn / zair","Thank you"],
+[1,"Bitte schön","bih-tuh shurn","You’re welcome"],
+[1,"Es tut mir leid","ehs toot meer lite","I’m sorry"],
+[1,"Entschuldigen Sie","ehnt-shool-dih-gun zee","Excuse me"],
+[1,"Verzeihung","","Pardon me"],
+[1,"Wie geht es Ihnen?","vee gayt es ee-nen","How are you? (formal)"],
+[1,"Wie geht’s?","vee gayts","How are you? (informal)"],
+[1,"(Sehr) Gut / So lala","zair goot / zo lahlah","(Very) good / OK"],
+[1,"Schlecht / Nicht gut","shlekht / nisht goot","Bad / Not good"],
+[1,"Es geht.","ess gate","I’m OK. (informal)"],
+[1,"Ja / Nein","yah / nine","Yes / No"],
+[1,"Wie heißen Sie?","vee hie-ssen zee","What’s your name? (formal)"],
+[1,"Wie heißt du?","vee heisst doo","What’s your name? (informal)"],
+[1,"Ich heiße...","ikh hie-ssuh","My name is... (I am called...)"],
+[2,"Es freut mich.","froy(t) mikh","Pleased to meet you."],
+[2,"Gleichfalls.","glykh-fals","Likewise."],
+[2,"Herr / Frau / Fräulein","hair / frow / froi-line","Mister / Mrs. / Miss"],
+[2,"Woher kommen Sie?","vo-hair koh-men zee","Where are you from? (formal)"],
+[2,"Woher kommst du?","vo-hair kohmst doo","Where are you from? (informal)"],
+[2,"Ich komme aus...","ikh koh-muh ows","I’m from..."],
+[2,"Wo wohnen Sie?","vo wohn-en zee","Where do you live? (formal)"],
+[2,"Wo wohnst du?","vo vohnst doo","Where do you live? (informal)"],
+[2,"Ich wohne in...","ikh voh-nuh in","I live in..."],
+[2,"Wie alt sind Sie?","vee alt zint zee","How old are you? (formal)"],
+[2,"Wie alt bist du?","vee alt bisst doo","How old are you? (informal)"],
+[2,"Ich bin ___ Jahre alt.","ikh bin ___ yaa-reh alt","I am ___ years old."],
+[2,"Sprechen Sie deutsch?","shpreck-en zee doytch","Do you speak German? (formal)"],
+[2,"Sprichst du englisch?","shprikhst doo eng-lish","Do you speak English? (informal)"],
+[2,"Ich spreche (kein)...","ikh shpreck-uh kine","I (don’t) speak..."],
+[2,"Verstehen Sie? / Verstehst du?","fehr-shtay-en zee / fehr-shtayst doo","Do you understand? (formal / informal)"],
+[2,"Ich verstehe (nicht).","ikh fehr-shtay-en nikht","I (don’t) understand."],
+[2,"Ich weiß (nicht).","ikh viss nikht","I (don’t) know."],
+[2,"Können Sie mir helfen?","ker-nen zee meer hell-fen","Can you help me? (formal)"],
+[2,"Kannst du mir helfen?","kahnst doo meer hell-fen","Can you help me? (informal)"],
+[2,"Natürlich / Gerne","nah-toor-likh / gair-nuh","Of course / Gladly"],
+[2,"Kann ich Ihnen helfen?","kahn ikh ee-nen hell-fen","May I help you? (formal)"],
+[2,"Kann ich dir helfen?","kahn ikh deer hell-fen","May I help you? (informal)"],
+[2,"Wie bitte?","vee bih-tuh","What? Pardon me?"],
+[2,"Wie heißt ___ auf deutsch?","vee heist ___ owf doytch","How do you say ___ in German?"],
+[2,"Wo ist / Wo sind...?","voh ist / voh zint","Where is / Where are...?"],
+[2,"Es gibt...","ess geept","There is / There are..."],
+[2,"Was ist los?","vahs ist lohs","What’s the matter?"],
+[2,"Das macht nichts.","dass makht nikhts","It doesn’t matter."],
+[2,"Das ist mir egal.","dass ist meer eh-gahl","I don’t care."],
+[2,"Keine Angst!","ky-nuh ahngst","Don’t worry!"],
+[2,"Ich habe es vergessen.","ikh hah-buh ess fehr-gah-ssen","I forgot."],
+[2,"Jetzt muss ich gehen.","yetz mooss ikh geh-en","I must go now."],
+[3,"Ich habe Hunger / Durst.","ikh hah-buh hoong-er / durst","I’m hungry / thirsty."],
+[3,"Ich bin krank / müde.","ikh bin krahnk / moo-duh","I’m sick / tired."],
+[3,"Ich habe Langeweile.","ikh hah-buh lahn-guh-vy-luh","I’m bored."],
+[3,"Ich möchte / Ich hätte gern...","ikh merkht-uh / ikh heh-tuh gairn","I’d like..."],
+[3,"Das gefällt mir.","dahs geh-fehlt meer","I like it."],
+[3,"Prima / Toll / Super!","pree-mah / tohl / zoo-pair","Great / Fantastic!"],
+[3,"Gesundheit!","geh-soont-hyt","Bless you!"],
+[3,"Herzlichen Glückwunsch!","herts-likh-en glewk-voonsh","Congratulations!"],
+[3,"Sei ruhig!","zy roo-hikh","Be quiet! (informal)"],
+[3,"Willkommen!","vil-koh-men","Welcome!"],
+[3,"Viel Glück!","feel glewk","Good luck!"],
+[3,"Schauen Sie mal! / Schau mal!","show-en zee mal / show mal","Look! (formal / informal)"],
+[3,"Bitte schön?","","Yes? / What would you like to order?"],
+[3,"Was darf’s sein?","","What can I get you? / How can I help you?"],
+[3,"Sonst noch etwas?","","Anything else?"],
+[3,"Bitte schön.","","Here you go. (handing something to someone)"],
+[3,"Zahlen bitte!","","The check, please!"],
+[3,"Stimmt so.","","Keep the change."],
+[3,"Ich bin satt.","","I’m full."],
+[3,"Mir ist schlecht.","","I feel sick."],
+[3,"Es tut mir weh.","","It hurts."],
+[3,"Ich liebe dich.","ikh leeb-uh dikh","I love you. (informal)"],
+[3,"Du fehlst mir.","","I miss you. (informal)"],
+[3,"Alles ist in Ordnung.","","Everything is fine."],
+[3,"Wie wäre es mit ...?","","How about...?"],
+[3,"Was für ein...?","","What kind of (a)...?"],
+[3,"Nicht wahr?","","Right? / Isn’t it? (tag question)"]
+];
+const names={0:"All sets",1:S1,2:S2,3:S3};
+let set=0,deck=[],i=0,shuffled=false;
+const $=id=>document.getElementById(id);
+function build(){
+  deck=D.filter(d=>!set||d[0]===set);
+  if(shuffled){for(let k=deck.length-1;k>0;k--){const j=Math.random()*(k+1)|0;[deck[k],deck[j]]=[deck[j],deck[k]]}}
+  i=0;show();
+}
+function show(){
+  const d=deck[i];
+  $("card").dataset.set=d[0];
+  $("card").classList.remove("flip");
+  $("de").textContent=d[1];$("pr").textContent=d[2];$("en").textContent=d[3];
+  $("cnt").textContent="Card "+(i+1)+" of "+deck.length;
+  $("set").textContent=names[d[0]].split(":")[0];
+  $("prog").style.width=((i+1)/deck.length*100)+"%";
+}
+function go(n){i=(i+n+deck.length)%deck.length;show()}
+function flip(){$("card").classList.toggle("flip")}
+function tabs(){
+  $("tabs").innerHTML="";
+  [0,1,2,3].forEach(k=>{
+    const b=document.createElement("button");b.type="button";
+    b.textContent=k?"Set "+k+" ("+D.filter(d=>d[0]===k).length+")":"All ("+D.length+")";
+    b.dataset.k=k;b.setAttribute("aria-pressed",k===set);
+    b.title=names[k];
+    b.onclick=()=>{set=k;tabs();build()};
+    $("tabs").appendChild(b);
+  });
+}
+$("card").onclick=flip;$("flip").onclick=flip;
+$("next").onclick=()=>go(1);$("prev").onclick=()=>go(-1);
+$("shuf").onclick=()=>{shuffled=!shuffled;$("shuf").setAttribute("aria-pressed",shuffled);build()};
+$("say").onclick=()=>{
+  try{
+    const t=deck[i][1].replace(/___/g,"").replace(/\s*\/\s*/g,". ");
+    const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=.85;
+    speechSynthesis.cancel();speechSynthesis.speak(u);
+  }catch(e){$("say").style.display="none"}
+};
+if(!("speechSynthesis" in window))$("say").style.display="none";
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight")go(1);
+  else if(e.key==="ArrowLeft")go(-1);
+  else if(e.key===" "&&e.target.tagName!=="BUTTON"){e.preventDefault();flip()}
+});
+$("tog").onclick=()=>{
+  const r=document.documentElement,d=matchMedia("(prefers-color-scheme: dark)").matches;
+  const c=r.getAttribute("data-theme")||(d?"dark":"light");
+  r.setAttribute("data-theme",c==="dark"?"light":"dark");
+};
+tabs();build();
+</script>
+</body>
+</html>
